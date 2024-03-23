@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Love Request</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-800 flex justify-center items-center h-screen p-2">
+  <div class="w-full max-w-md bg-white rounded shadow-lg overflow-hidden flex flex-col items-center relative"  id="movable-container">
+    <div class="p-10 text-center mb-12">
+      <p id="text" class="text-3xl font-bold">Will you be my gf?</p>
+      <div class="w-[200px] h-[200px] mx-auto  overflow-hidden my-5">
+        <img src="https://i.pinimg.com/564x/f5/32/6c/f5326c66d25e65ccc205cbc93e324805.jpg" alt="" class="w-full h-full object-cover" id="image" />
+      </div>
+    </div>
+    <div class="flex justify-center mt-auto">
+      <button
+        class="bg-green-500 hover:bg-green-700 text-white font-bold h-fit py-2 px-4 rounded shadow mx-2 focus:outline-none absolute bottom-4 left-32"
+        id="yesBtn"
+      >
+        Yes
+      </button>
+      <button
+        class="bg-red-500 hover:bg-red-700 text-white font-bold h-fit py-2 px-4 rounded shadow mx-2 focus:outline-none absolute bottom-4 left-60"
+        id="noBtn"
+      >
+        No
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const ACCESS = [
+      "https://i.pinimg.com/236x/46/d3/0d/46d30dc24912d033ca65e0d780f84f3d.jpg",
+      "https://i.pinimg.com/474x/fe/d9/ef/fed9ef0b37c748add7edc587cf892ddc.jpg",
+      "https://i.pinimg.com/236x/91/94/cd/9194cd0bd25ac2a7193efa79e40048bf.jpg",
+      "https://i.pinimg.com/236x/ac/d5/c1/acd5c1e0ddde474b93ecceefdd283fbb.jpg",
+      "https://i.pinimg.com/564x/10/ec/5a/10ec5ab712fcdc096c320d0ad2b341ac.jpg",
+    ];
+
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const container = document.getElementById("movable-container");
+    const image = document.getElementById("image");
+    const text = document.getElementById("text");
+    const originalPosition = {
+      left: noBtn.style.left,
+      top: noBtn.style.top,
+    };
+
+    noBtn.addEventListener("mouseover", function (event) {
+      const noBtnRect = noBtn.getBoundingClientRect();
+      const maxX = container.offsetWidth - noBtnRect.width;
+      const maxY = container.offsetHeight - noBtnRect.height;
+
+      const randomX = Math.floor(Math.random() * maxX);
+      const randomY = Math.floor(Math.random() * maxY);
+      noBtn.style.left = randomX + "px";
+      noBtn.style.top = randomY + "px";
+    });
+
+    noBtn.addEventListener("click", () => {
+      image.src = "https://i.pinimg.com/236x/40/ed/0f/40ed0f23545b3cdbb8f1e19ffe369e0d.jpg";
+      text.innerHTML = "Hurt to me";
+    });
+
+    container.addEventListener("mouseleave", function (event) {
+      noBtn.style.left = originalPosition.left;
+      noBtn.style.top = originalPosition.top;
+    });
+
+    // Assuming ACCESS is an array of image URLs
+    yesBtn.addEventListener("click", () => {
+      text.innerHTML = "Hapi Hapi";
+      noBtn.style.left = originalPosition.left;
+      noBtn.style.top = originalPosition.top;
+      let index = 0; // Track the current index of the image
+      const intervalId = setInterval(() => {
+        image.src = ACCESS[index]; // Set the image source
+        index = (index + 1) % ACCESS.length; // Move to the next image URL, looping back to the start if necessary
+      }, 1000); // Interval set to 30 seconds
+    });
+  </script>
+</body>
+</html>
